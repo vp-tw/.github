@@ -38,5 +38,5 @@ jobs:
           plugin_languages_limit: 8
 
           # 輸出設定
-          filename: metrics.svg
+          filename: profile/metrics.svg
           config_output: svg
