@@ -1,0 +1,42 @@
+name: Metrics
+on:
+  # 每小時更新
+  schedule:
+    - cron: "0 * * * *"
+  # 手動觸發
+  workflow_dispatch:
+  # Push 到 main 時也觸發
+  push:
+    branches:
+      - main
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+
+          # Organization 設定
+          user: vp-tw
+          template: classic
+          base: header, activity, community, repositories
+          config_timezone: Asia/Taipei
+
+          # 最近活動
+          plugin_activity: yes
+          plugin_activity_limit: 5
+          plugin_activity_days: 14
+          plugin_activity_filter: all
+
+          # 語言統計
+          plugin_languages: yes
+          plugin_languages_sections: most-used
+          plugin_languages_limit: 8
+
+          # 輸出設定
+          filename: metrics.svg
+          config_output: svg
